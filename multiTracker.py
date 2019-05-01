@@ -46,7 +46,7 @@ if __name__ == '__main__':
   trackerType = "CSRT"      
 
   # Set video to load
-  videoPath = "videos/run.mp4"
+  videoPath = "run.mp4"
   
   # Create a video capture object to read videos
   cap = cv2.VideoCapture(videoPath)

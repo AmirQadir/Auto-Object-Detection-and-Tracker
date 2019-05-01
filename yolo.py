@@ -122,6 +122,7 @@ if __name__ == '__main__':
 
 		finally:
 			while True:
+				#print("in true")
 				grabbed, frame = vid.read()
 
 			    # Checking if the complete video is read
