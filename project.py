@@ -50,7 +50,7 @@ if __name__ == '__main__':
   trackerType = "CSRT"      
 
   # Set video to load
-  videoPath = "run.mp4"
+  videoPath = "race.mp4"
   
   # Create a video capture object to read videos
   cap = cv2.VideoCapture(videoPath)
@@ -187,10 +187,10 @@ if __name__ == '__main__':
 
 
   # Initialize MultiTracker 
+  colors_multi = []
   for bbox in my_tuple:
     multiTracker.add(createTrackerByName(trackerType), frame, bbox)
-  colors_multi = []
-  colors_multi.append((randint(64, 255), randint(64, 255), randint(64, 255)))
+    colors_multi.append((randint(64, 255), randint(64, 255), randint(64, 255)))
   # Process video and track objects
   while cap.isOpened():
     success, frame = cap.read()
