@@ -108,6 +108,7 @@ if __name__ == '__main__':
 
 		finally:
 			img, _, _, _, _ = infer_image(net, layer_names, height, width, img, colors, labels, FLAGS)
+			print("inferred image: showing")
 			show_image(img)
 
 	elif FLAGS.video_path:
