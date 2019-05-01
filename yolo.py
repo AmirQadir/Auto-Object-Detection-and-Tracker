@@ -73,7 +73,7 @@ if __name__ == '__main__':
 		help='Show the time taken to infer each image.')
 
 	FLAGS, unparsed = parser.parse_known_args()
-
+	print(FLAGS)
 	# Download the YOLOv3 models if needed
 	if FLAGS.download_model:
 		subprocess.call(['./yolov3-coco/get_model.sh'])
@@ -107,8 +107,9 @@ if __name__ == '__main__':
                                Please check the path provided!'
 
 		finally:
-			img, _, _, _, _ = infer_image(net, layer_names, height, width, img, colors, labels, FLAGS)
+			img, boxes, _, _, _ = infer_image(net, layer_names, height, width, img, colors, labels, FLAGS)
 			print("inferred image: showing")
+			print("boxes: " , boxes)
 			show_image(img)
 
 	elif FLAGS.video_path:
