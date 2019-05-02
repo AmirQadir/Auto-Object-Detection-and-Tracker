@@ -47,6 +47,7 @@ if __name__ == '__main__':
   for t in trackerTypes:
       print(t)      
 
+  #trackerType = "CSRT"      
   trackerType = "CSRT"      
 
   # Set video to load
@@ -68,6 +69,9 @@ if __name__ == '__main__':
 
 
   ################# copied code
+
+
+
   parser = argparse.ArgumentParser()
 
   parser.add_argument('-m', '--model-path',
@@ -140,6 +144,9 @@ if __name__ == '__main__':
 
 
   ################################
+
+
+
   height, width = frame.shape[:2]
 
   img, bboxes, _, _, _ = infer_image(net, layer_names, height, width, frame, colors, labels, FLAGS)
@@ -214,3 +221,6 @@ if __name__ == '__main__':
     if cv2.waitKey(1) & 0xFF == 27:  # Esc pressed
       break
 
+    if cv2.waitKey(1) & 0xFF == 121:
+      print("key presses")  
+      
