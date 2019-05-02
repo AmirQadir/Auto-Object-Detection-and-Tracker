@@ -159,7 +159,7 @@ if __name__ == '__main__':
   videoPath = "run.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(videoPath)
+  cap = cv2.VideoCapture(0)
  
   # Read first frame
   success, frame = cap.read()
