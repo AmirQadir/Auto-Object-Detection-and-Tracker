@@ -40,38 +40,9 @@ def createTrackerByName(trackerType):
     
   return tracker
 
-if __name__ == '__main__':
-
-  print("Default tracking algoritm is CSRT \n"
-        "Available tracking algorithms are:\n")
-  for t in trackerTypes:
-      print(t)      
-
-  #trackerType = "CSRT"      
-  trackerType = "CSRT"      
-
-  # Set video to load
-  videoPath = "race.mp4"
-  
-  # Create a video capture object to read videos
-  cap = cv2.VideoCapture(videoPath)
- 
-  # Read first frame
-  success, frame = cap.read()
-  # quit if unable to read the video file
-  if not success:
-    print('Failed to read video')
-    sys.exit(1)
-
-  ## Select boxes
-  bboxes = []
-  colors = [] 
 
 
-  ################# copied code
-
-
-
+def yolo():
   parser = argparse.ArgumentParser()
 
   parser.add_argument('-m', '--model-path',
@@ -159,35 +130,6 @@ if __name__ == '__main__':
   print(my_tuple)
 
 
-  # OpenCV's selectROI function doesn't work for selecting multiple objects in Python
-  # So we will call this function in a loop till we are done selecting all objects
-  #while True:
-    # draw bounding boxes over objects
-    # selectROI's default behaviour is to draw box starting from the center
-    # when fromCenter is set to false, you can draw box starting from top left corner
-   
-    #bbox = cv2.selectROI('MultiTracker', frame)
-    #bboxes.append(bbox)
-    #colors.append((randint(64, 255), randint(64, 255), randint(64, 255)))
-    #print("Press q to quit selecting boxes and start tracking")
-    #print("Press any other key to select next object")
-    #k = cv2.waitKey(0) & 0xFF
-    #if (k == 113):  # q is pressed
-    #  break
-  
-  #print('Selected bounding boxes {}'.format(bboxes))
-
-  ## Initialize MultiTracker
-  # There are two ways you can initialize multitracker
-  # 1. tracker = cv2.MultiTracker("CSRT")
-  # All the trackers added to this multitracker
-  # will use CSRT algorithm as default
-  # 2. tracker = cv2.MultiTracker()
-  # No default algorithm specified
-
-  # Initialize MultiTracker with tracking algo
-  # Specify tracker type
-  
   # Create MultiTracker object
   multiTracker = cv2.MultiTracker_create()
 
@@ -198,7 +140,54 @@ if __name__ == '__main__':
   for bbox in my_tuple:
     multiTracker.add(createTrackerByName(trackerType), frame, bbox)
     colors_multi.append((randint(64, 255), randint(64, 255), randint(64, 255)))
+
+  return multiTracker, colors_multi
+
+
+
+if __name__ == '__main__':
+
+  print("Default tracking algoritm is CSRT \n"
+        "Available tracking algorithms are:\n")
+  for t in trackerTypes:
+      print(t)      
+
+  #trackerType = "CSRT"      
+  trackerType = "CSRT"      
+
+  # Set video to load
+  videoPath = "run.mp4"
+  
+  # Create a video capture object to read videos
+  cap = cv2.VideoCapture(videoPath)
+ 
+  # Read first frame
+  success, frame = cap.read()
+  # quit if unable to read the video file
+  if not success:
+    print('Failed to read video')
+    sys.exit(1)
+
+  ## Select boxes
+  bboxes = []
+  colors = [] 
+
+
+  ################# copied code
+
+  multiTracker, colors_multi = yolo()
+  
+
+
+
+
+
   # Process video and track objects
+  
+
+
+
+
   while cap.isOpened():
     success, frame = cap.read()
     if not success:
@@ -222,5 +211,6 @@ if __name__ == '__main__':
       break
 
     if cv2.waitKey(1) & 0xFF == 121:
+      multiTracker, colors_multi = yolo()
       print("key presses")  
       
