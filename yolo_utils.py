@@ -83,7 +83,8 @@ def infer_image(net, layer_names, height, width, img, colors, labels, FLAGS,
         
         # Generate the boxes, confidences, and classIDs
         boxes, confidences, classids = generate_boxes_confidences_classids(outs, height, width, FLAGS.confidence)
-        print("Bounding boxes: "  , boxes)
+        #print("Bounding boxes: "  , boxes)
+        #print("Class id:  ",classids)
         # Apply Non-Maxima Suppression to suppress overlapping bounding boxes
         idxs = cv.dnn.NMSBoxes(boxes, confidences, FLAGS.confidence, FLAGS.threshold)
 

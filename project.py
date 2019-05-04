@@ -120,14 +120,22 @@ def yolo():
 
   height, width = frame.shape[:2]
 
-  img, bboxes, _, _, _ = infer_image(net, layer_names, height, width, frame, colors, labels, FLAGS)
+  img, bboxes, _, classid, _ = infer_image(net, layer_names, height, width, frame, colors, labels, FLAGS)
+
+  j=0
+  for i in classid:
+    print(i)
+    if i==0:
+      print("persons bounding box is: ",bboxes[j])
+      break
+    j=j+1
 
   my_tuple = []
 
   for i in bboxes:
     my_tuple.append(tuple(i))
 
-  print(my_tuple)
+  #print(my_tuple)
 
 
   # Create MultiTracker object
