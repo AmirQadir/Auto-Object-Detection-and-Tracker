@@ -1,8 +1,8 @@
 import numpy as np
 import cv2 as cv
 from matplotlib import pyplot as plt
-img1 = cv.imread('car.jpg',0)          # queryImage
-img2 = cv.imread('car_crop.jpg',0) # trainImage
+img1 = cv.imread('nabeel.jpg',0)          # queryImage
+img2 = cv.imread('nabeel_train.jpg',0) # trainImage
 # Initiate SIFT detector
 sift = cv.xfeatures2d.SIFT_create()
 # find the keypoints and descriptors with SIFT
@@ -19,4 +19,4 @@ for m,n in matches:
 # cv.drawMatchesKnn expects list of lists as matches.
 img3 = cv.drawMatchesKnn(img1,kp1,img2,kp2,good,None,flags=2)
 #plt.imshow(img3),plt.show()
-cv.imwrite("brute.jpg",img3)
+cv.imwrite("brute_nabeel.jpg",img3)

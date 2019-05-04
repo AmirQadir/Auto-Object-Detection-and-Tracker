@@ -1,8 +1,8 @@
 import numpy as np
 import cv2 as cv
 import matplotlib.pyplot as plt
-img1 = cv.imread('car.jpg',0)          # queryImage
-img2 = cv.imread('car_crop.jpg',0) # trainImage
+img1 = cv.imread('nabeel.jpg',0)          # queryImage
+img2 = cv.imread('nabeel_train.jpg',0) # trainImage
 # Initiate ORB detector
 orb = cv.ORB_create()
 # find the keypoints and descriptors with ORB
@@ -22,4 +22,4 @@ img3 = cv.drawMatches(img1,kp1,img2,kp2,matches[:10], None,flags=2)
 
 #plt.imshow(img3),plt.show()
 
-cv.imwrite("first_code.jpg",img3)
+cv.imwrite("first_code_nabeel.jpg",img3)
