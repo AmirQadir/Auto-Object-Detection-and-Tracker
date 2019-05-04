@@ -164,10 +164,10 @@ if __name__ == '__main__':
   trackerType = "CSRT"      
 
   # Set video to load
-  videoPath = "run.mp4"
+  videoPath = "race.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(videoPath)
  
   # Read first frame
   success, frame = cap.read()
