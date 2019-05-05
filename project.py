@@ -124,11 +124,24 @@ def yolo():
 
   j=0
   for i in classid:
-    print(i)
     if i==0:
       print("persons bounding box is: ",bboxes[j])
-      break
+      boxes=bboxes[j].copy()
+      print(boxes[1])
     j=j+1
+
+  ############################temp ###########33
+  #for index,value in enumerate(boxes):
+  name = 'dataset/' + str("person") + '.jpg'
+  y = boxes[1]
+  x = boxes[0]
+  h = boxes[3]
+  w = boxes[2]
+  crop_img = img[y:y+h, x:x+w]
+  cv.imwrite(name,crop_img)
+
+
+  ##########################temp done#########33  
 
   my_tuple = []
 
@@ -167,7 +180,7 @@ if __name__ == '__main__':
   videoPath = "race.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(videoPath)
+  cap = cv2.VideoCapture(0)
  
   # Read first frame
   success, frame = cap.read()
@@ -179,6 +192,7 @@ if __name__ == '__main__':
   ## Select boxes
   bboxes = []
   colors = [] 
+  boxes=[]
 
 
   ################# copied code
