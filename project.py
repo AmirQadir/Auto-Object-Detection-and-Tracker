@@ -124,38 +124,43 @@ def yolo():
 
   img, bboxes, _, classid, _ = infer_image(net, layer_names, height, width, frame, colors, labels, FLAGS)
 
+  boxes = [] #It's a list now
+
   j=0
   for i in classid:
     if i==0:
       print("persons bounding box is: ",bboxes[j])
-      boxes=bboxes[j].copy()
-      print(boxes[1])
+      boxes.append(bboxes[j].copy())
+      print(boxes[i])
     j=j+1
 
   ############################temp ###########33
   #for index,value in enumerate(boxes):
-  name = 'dataset/' + str("person") + '.jpg'
-  y = boxes[1]
-  x = boxes[0]
-  h = boxes[3]
-  w = boxes[2]
-  crop_img = img[y:y+h, x:x+w]
-  cv.imwrite(name,crop_img)
+  itr = 0
+  for i in range(len(boxes)):
+    itr = itr + 1
+    name = 'dataset/' + str("person") + str(itr) + ".jpg"
+    y = boxes[i][1]
+    x = boxes[i][0]
+    h = boxes[i][3]
+    w = boxes[i][2]
+    crop_img = img[y:y+h,x:x+w]
+    cv.imwrite(name,crop_img)
 
-  detector = MTCNN()
-  print("I am a detector phewww !")
-  print(detector.detect_faces(crop_img))
-  face_cropped = detector.detect_faces(crop_img)
+    detector = MTCNN()
+    print("I am a detector phewww !")
+    print(detector.detect_faces(crop_img))
+    face_cropped = detector.detect_faces(crop_img)
+    boxes_face = (face_cropped[0]['box'])
+    y1 = boxes_face[1]
+    x1 = boxes_face[0]
+    h1 = boxes_face[3]
+    w1 = boxes_face[2]
+    crop_img_2 = crop_img[y1:y1+h1, x1:x1+w1]
+    name = 'dataset/' + str("face")+ str(itr) + '.jpg'
+    cv.imwrite(name,crop_img_2)
 
-  boxes_face = (face_cropped[0]['box'])
-  y1 = boxes_face[1]
-  x1 = boxes_face[0]
-  h1 = boxes_face[3]
-  w1 = boxes_face[2]
-  crop_img_2 = crop_img[y1:y1+h1, x1:x1+w1]
-  name = 'dataset/' + str("face") + '.jpg'
-  cv.imwrite(name,crop_img_2)
-
+  
 
 
 
