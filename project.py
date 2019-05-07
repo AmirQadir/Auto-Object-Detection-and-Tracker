@@ -10,6 +10,8 @@ import argparse
 import numpy as np
 import cv2 as cv
 from yolo_utils import infer_image
+#Amir
+from mtcnn.mtcnn import MTCNN
 
 trackerTypes = ['BOOSTING', 'MIL', 'KCF','TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
 
@@ -124,11 +126,42 @@ def yolo():
 
   j=0
   for i in classid:
-    print(i)
     if i==0:
       print("persons bounding box is: ",bboxes[j])
-      break
+      boxes=bboxes[j].copy()
+      print(boxes[1])
     j=j+1
+
+  ############################temp ###########33
+  #for index,value in enumerate(boxes):
+  name = 'dataset/' + str("person") + '.jpg'
+  y = boxes[1]
+  x = boxes[0]
+  h = boxes[3]
+  w = boxes[2]
+  crop_img = img[y:y+h, x:x+w]
+  cv.imwrite(name,crop_img)
+
+  detector = MTCNN()
+  print("I am a detector phewww !")
+  print(detector.detect_faces(crop_img))
+  face_cropped = detector.detect_faces(crop_img)
+
+  boxes_face = (face_cropped[0]['box'])
+  y1 = boxes_face[1]
+  x1 = boxes_face[0]
+  h1 = boxes_face[3]
+  w1 = boxes_face[2]
+  crop_img_2 = crop_img[y1:y1+h1, x1:x1+w1]
+  name = 'dataset/' + str("face") + '.jpg'
+  cv.imwrite(name,crop_img_2)
+
+
+
+
+
+
+  ##########################temp done#########33  
 
   my_tuple = []
 
@@ -167,7 +200,7 @@ if __name__ == '__main__':
   videoPath = "race.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(videoPath)
+  cap = cv2.VideoCapture(0)
  
   # Read first frame
   success, frame = cap.read()
@@ -179,6 +212,7 @@ if __name__ == '__main__':
   ## Select boxes
   bboxes = []
   colors = [] 
+  boxes=[]
 
 
   ################# copied code
