@@ -10,6 +10,8 @@ import argparse
 import numpy as np
 import cv2 as cv
 from yolo_utils import infer_image
+#Amir
+from mtcnn.mtcnn import MTCNN
 
 trackerTypes = ['BOOSTING', 'MIL', 'KCF','TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
 
@@ -139,6 +141,24 @@ def yolo():
   w = boxes[2]
   crop_img = img[y:y+h, x:x+w]
   cv.imwrite(name,crop_img)
+
+  detector = MTCNN()
+  print("I am a detector phewww !")
+  print(detector.detect_faces(crop_img))
+  face_cropped = detector.detect_faces(crop_img)
+
+  boxes_face = (face_cropped[0]['box'])
+  y1 = boxes_face[1]
+  x1 = boxes_face[0]
+  h1 = boxes_face[3]
+  w1 = boxes_face[2]
+  crop_img_2 = crop_img[y1:y1+h1, x1:x1+w1]
+  name = 'dataset/' + str("face") + '.jpg'
+  cv.imwrite(name,crop_img_2)
+
+
+
+
 
 
   ##########################temp done#########33  
