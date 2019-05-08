@@ -228,14 +228,17 @@ def yolo():
     for img in glob.glob("dataset/face*.jpg"):
       #img = cv2.resize(img,(100,100),interpolation=cv2.INTER_AREA)
       #Sensitive Part
+      
 
       rec = faceID()
-
+      print("constructor finished")
      # crop_img_2 = getCroppedImage(rec,crop_img_2) accepts image in np arary
 
       crop_img_2 = rec.prewhiten2(crop_img_2)
 
       embeds = rec.getEmbed(crop_img_2) 
+
+
 
       for itr, em in enumerate(embeds): 
         name = rec.search_img_thorough2(em,data)
@@ -299,7 +302,7 @@ if __name__ == '__main__':
   videoPath = "webcam.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(0)
+  cap = cv2.VideoCapture(videoPath)
  
   # Read first frame
   success, frame = cap.read()
