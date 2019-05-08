@@ -53,5 +53,6 @@ with open("labels.pickle",'wb') as f:
 
 recognizer.train(x_train, np.array(y_labels))
 recognizer.save("trainer.yml")
+print("Complete")
 
 
