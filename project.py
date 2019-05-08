@@ -16,7 +16,7 @@ from skimage.transform import resize
 import glob 
 from mtcnn.mtcnn import MTCNN
 
-from FaceID import faceID
+#from FaceID import faceID
 
 
 trackerTypes = ['BOOSTING', 'MIL', 'KCF','TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
@@ -299,7 +299,7 @@ if __name__ == '__main__':
   itr = 0
 
   # Set video to load
-  videoPath = "webcam.mp4"
+  videoPath = "muaaz.mp4"
   
   # Create a video capture object to read videos
   cap = cv2.VideoCapture(videoPath)
