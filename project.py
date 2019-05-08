@@ -20,50 +20,50 @@ from FaceID import faceID
 
 
 trackerTypes = ['BOOSTING', 'MIL', 'KCF','TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
-def getCroppedImage(faceid, img):
-    try:
+# def getCroppedImage(faceid, img):
+#     try:
         
-        rec = faceid #FaceID is class where face recognition model is written.
+#         rec = faceid #FaceID is class where face recognition model is written.
         
-        if img.ndim < 2:
-            print('Unable to crop the image.')
-            return (None, -402);
+#         if img.ndim < 2:
+#             print('Unable to crop the image.')
+#             return (None, -402);
     
-        if img.ndim == 2:
-            img = rec.to_rgb(img)
-            print('to_rgb data dimension: ', img.ndim)
+#         if img.ndim == 2:
+#             img = rec.to_rgb(img)
+#             print('to_rgb data dimension: ', img.ndim)
                 
-        x,y,_= img.shape
+#         x,y,_= img.shape
     
-        if(y>500):
-            img = cv2.resize( img, (500, x) )
+#         if(y>500):
+#             img = cv2.resize( img, (500, x) )
     
-        x,y,_ = img.shape
+#         x,y,_ = img.shape
              
-        if(x>500):
-            img = cv2.resize( img, (y, 500) )   
+#         if(x>500):
+#             img = cv2.resize( img, (y, 500) )   
     
-        faces = rec.get_face(img)
-        if (len(faces)>1):
-            return (None,-400); #Found more than one face. Image field is none.
+#         faces = rec.get_face(img)
+#         if (len(faces)>1):
+#             return (None,-400); #Found more than one face. Image field is none.
         
-        maxx = 0.9; bestFace = None
+#         maxx = 0.9; bestFace = None
         
-        for f in faces:
-            if(f[4]>maxx):
-                maxx = f[4]
-                bestFace = f
+#         for f in faces:
+#             if(f[4]>maxx):
+#                 maxx = f[4]
+#                 bestFace = f
             
                  
-        if( bestFace is not None ):
-            croppedImage = rec.get_crops2(bestFace, img)[0]
+#         if( bestFace is not None ):
+#             croppedImage = rec.get_crops2(bestFace, img)[0]
 
-            return (croppedImage,0); 
+#             return (croppedImage,0); 
 
-        return (None,-401);     
-    except:
-        cv2.destroyAllWindows();    
-        raise;
+#         return (None,-401);     
+#     except:
+#         cv2.destroyAllWindows();    
+#         raise;
 
 def createTrackerByName(trackerType):
   # Create a tracker based on tracker name
@@ -224,30 +224,30 @@ def yolo():
     #crop_img_2 = cv2.resize(crop_img_2,(100,100),interpolation=cv2.INTER_AREA)
 
     # Matching probabiity 
-    images = []
-    for img in glob.glob("dataset/face*.jpg"):
+    # images = []
+    # for img in glob.glob("dataset/face*.jpg"):
       #img = cv2.resize(img,(100,100),interpolation=cv2.INTER_AREA)
       #Sensitive Part
       
 
-      rec = faceID()
-      print("constructor finished")
-     # crop_img_2 = getCroppedImage(rec,crop_img_2) accepts image in np arary
+     #  rec = faceID()
+     #  print("constructor finished")
+     # # crop_img_2 = getCroppedImage(rec,crop_img_2) accepts image in np arary
 
-      crop_img_2 = rec.prewhiten2(crop_img_2)
+     #  crop_img_2 = rec.prewhiten2(crop_img_2)
 
-      embeds = rec.getEmbed(crop_img_2) 
+     #  embeds = rec.getEmbed(crop_img_2) 
 
 
 
-      for itr, em in enumerate(embeds): 
-        name = rec.search_img_thorough2(em,data)
+     #  for itr, em in enumerate(embeds): 
+     #    name = rec.search_img_thorough2(em,data)
         
-      print(name)
+     #  print(name)
 
 
-      n = cv2.imread(img)
-      images.append(n)
+     #  n = cv2.imread(img)
+     #  images.append(n)
 
 
 
