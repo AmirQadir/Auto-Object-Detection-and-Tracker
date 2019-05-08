@@ -47,4 +47,5 @@ ax[2].set_xlabel(label.format(mse_const, ssim_const))
 ax[2].set_title('Image plus constant')
 
 plt.tight_layout()
-plt.show()
+#plt.show()
+plt.savefig('dataset/ssim.jpg')
