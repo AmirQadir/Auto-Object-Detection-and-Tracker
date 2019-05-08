@@ -4,3 +4,4 @@ images/
 __pycache__/
 *.avi
 backbone_ir50_ms1m_epoch120.pth
+models/20180408-102900.pb
