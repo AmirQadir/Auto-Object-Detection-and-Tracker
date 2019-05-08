@@ -11,9 +11,59 @@ import numpy as np
 import cv2 as cv
 from yolo_utils import infer_image
 #Amir
+from skimage.measure import compare_ssim
+from skimage.transform import resize
+import glob 
 from mtcnn.mtcnn import MTCNN
 
+from FaceID import faceID
+
+
 trackerTypes = ['BOOSTING', 'MIL', 'KCF','TLD', 'MEDIANFLOW', 'GOTURN', 'MOSSE', 'CSRT']
+def getCroppedImage(faceid, img):
+    try:
+        
+        rec = faceid #FaceID is class where face recognition model is written.
+        
+        if img.ndim < 2:
+            print('Unable to crop the image.')
+            return (None, -402);
+    
+        if img.ndim == 2:
+            img = rec.to_rgb(img)
+            print('to_rgb data dimension: ', img.ndim)
+                
+        x,y,_= img.shape
+    
+        if(y>500):
+            img = cv2.resize( img, (500, x) )
+    
+        x,y,_ = img.shape
+             
+        if(x>500):
+            img = cv2.resize( img, (y, 500) )   
+    
+        faces = rec.get_face(img)
+        if (len(faces)>1):
+            return (None,-400); #Found more than one face. Image field is none.
+        
+        maxx = 0.9; bestFace = None
+        
+        for f in faces:
+            if(f[4]>maxx):
+                maxx = f[4]
+                bestFace = f
+            
+                 
+        if( bestFace is not None ):
+            croppedImage = rec.get_crops2(bestFace, img)[0]
+
+            return (croppedImage,0); 
+
+        return (None,-401);     
+    except:
+        cv2.destroyAllWindows();    
+        raise;
 
 def createTrackerByName(trackerType):
   # Create a tracker based on tracker name
@@ -136,7 +186,7 @@ def yolo():
 
   ############################temp ###########33
   #for index,value in enumerate(boxes):
-  itr = 0
+  global itr
   for i in range(len(boxes)):
     itr = itr + 1
     name = 'dataset/' + str("person") + str(itr) + ".jpg"
@@ -160,6 +210,49 @@ def yolo():
     name = 'dataset/' + str("face")+ str(itr) + '.jpg'
     cv.imwrite(name,crop_img_2)
 
+
+    if(len(face_cropped)>0):
+      boxes_face = (face_cropped[0]['box'])
+      y1 = boxes_face[1]
+      x1 = boxes_face[0]
+      h1 = boxes_face[3]
+      w1 = boxes_face[2]
+      crop_img_2 = crop_img[y1:y1+h1, x1:x1+w1]
+      name = 'dataset/' + str("face")+ str(itr) + '.jpg'
+      #cv.imwrite(name,crop_img_2)
+
+    #crop_img_2 = cv2.resize(crop_img_2,(100,100),interpolation=cv2.INTER_AREA)
+
+    # Matching Part
+    images = []
+    for img in glob.glob("dataset/face*.jpg"):
+      #img = cv2.resize(img,(100,100),interpolation=cv2.INTER_AREA)
+      #Sensitive Part
+
+      rec = faceID()
+
+     # crop_img_2 = getCroppedImage(rec,crop_img_2) accepts image in np arary
+
+      crop_img_2 = rec.prewhiten2(crop_img_2)
+
+      embeds = rec.getEmbed(crop_img_2) 
+
+      for itr, em in enumerate(embeds): 
+        name = rec.search_img_thorough2(em,data)
+        
+      print(name)
+
+
+      n = cv2.imread(img)
+      images.append(n)
+
+
+
+    #for img in images:
+     # img = cv2.resize(img,(100,100),interpolation=cv2.INTER_AREA)
+      #if(np.linalg.norm(img-crop_img_2)>=0.9):
+       # val = np.linalg.norm(img-crop_img_2)
+        #print("Amir won",val)
   
 
 
@@ -200,12 +293,13 @@ if __name__ == '__main__':
 
   #trackerType = "CSRT"      
   trackerType = "CSRT"      
+  itr = 0
 
   # Set video to load
   videoPath = "webcam.mp4"
   
   # Create a video capture object to read videos
-  cap = cv2.VideoCapture(videoPath)
+  cap = cv2.VideoCapture(0)
  
   # Read first frame
   success, frame = cap.read()
@@ -260,4 +354,3 @@ if __name__ == '__main__':
     if cv2.waitKey(1) & 0xFF == 121:
       multiTracker, colors_multi = yolo()
       print("key presses")  
-      
