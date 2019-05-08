@@ -223,7 +223,7 @@ def yolo():
 
     #crop_img_2 = cv2.resize(crop_img_2,(100,100),interpolation=cv2.INTER_AREA)
 
-    # Matching Part
+    # Matching probabiity 
     images = []
     for img in glob.glob("dataset/face*.jpg"):
       #img = cv2.resize(img,(100,100),interpolation=cv2.INTER_AREA)
