@@ -4,8 +4,12 @@ images/
 __pycache__/
 *.avi
 backbone_ir50_ms1m_epoch120.pth
+<<<<<<< HEAD
 *.pb
 *.npy
 *.data-00000-of-00001
 *.index
 *.meta
+=======
+models/20180408-102900.pb
+>>>>>>> 5fa24a2b91a6b0e8330d424dce44ec319a245659

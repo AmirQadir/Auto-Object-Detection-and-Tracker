@@ -21,7 +21,7 @@ class faceID:
         print("\nFaceID Constructor Called" );
         if os.path.exists(EMB_FILE):
             with open(EMB_FILE, 'rb') as f:
-                self.db = pickle.load(f)
+                self.db = pickle.load(f,allow_pickle=True)
         else:
             self.db = {}
 
