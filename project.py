@@ -13,8 +13,12 @@ from yolo_utils import infer_image
 #Amir
 from skimage.measure import compare_ssim
 from skimage.transform import resize
+import os
 import glob 
 from mtcnn.mtcnn import MTCNN
+import numpy as np
+import cv2
+import pickle #for label naming
 
 #from FaceID import faceID
 
@@ -148,13 +152,23 @@ def yolo():
   global itr
   for i in range(len(boxes)):
     itr = itr + 1
-    name = 'dataset/' + str("person") + str(itr) + ".jpg"
+    # Matching part
+    labels = {}
+
+
+
+
+
+
+    #Matching part end
+
+
     y = boxes[i][1]
     x = boxes[i][0]
     h = boxes[i][3]
     w = boxes[i][2]
     crop_img = img[y:y+h,x:x+w]
-    cv.imwrite(name,crop_img)
+    #cv.imwrite(name,crop_img)
 
     detector = MTCNN()
     print("I am a detector phewww !")
@@ -169,7 +183,67 @@ def yolo():
       w1 = boxes_face[2]
       crop_img_2 = crop_img[y1:y1+h1, x1:x1+w1]
       name = 'dataset/' + str("face")+ str(itr) + '.jpg'
+      #cv.imwrite(name,crop_img_2)
+
+
+    #Matching Part
+    path = 'dataset/Face' +str(itr)
+    os.mkdir(path)
+    name = 'dataset/Face' +str(itr) + '/' + str("person") + str(itr) + ".jpg"
+    cv.imwrite(name,crop_img)
+    name = 'dataset/Face' +str(itr) + '/' + str("face") + str(itr) + ".jpg"
+    try:
       cv.imwrite(name,crop_img_2)
+    except:
+      pass
+    #amtching
+
+    #Faces_Train.py
+
+    os.system('faces_train.py')
+
+
+    #Faces_Train.py
+
+    with open("labels.pickle",'rb') as f:
+      og_labels = pickle.load(f)
+      labels = {v:k for k,v in og_labels.items()} #talk to me about this ;) (key, value pair conversion)
+    face_cascade = cv2.CascadeClassifier('cascade/data/haarcascade_frontalface_alt2.xml') #only front of a face
+    recognizer = cv2.face.LBPHFaceRecognizer_create()
+    recognizer.read("trainer.yml")
+
+
+
+    gray = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
+
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.5, minNeighbors=5)
+    #scaleFactor aghe peeche krke dekho
+    print("Faces",faces)
+
+    for (x, y, w, h) in faces:
+      print(x, y, w, h)
+      print("Amir")
+      roi_gray = gray[y:y+h, x:x+w] #roi -> Region of Interest
+      roi_color = crop_img[y:y+h, x:x+w]
+      #Recognition part
+      id_, conf = recognizer.predict(roi_gray) #id's and confidence level
+      print(id_,conf,"moz")
+      if(conf>=25 and conf<=85):
+        print(id_)
+        print("he")
+        print(labels[id_])
+        font = cv2.FONT_HERSHEY_SIMPLEX
+        name = labels[id_]
+        color = (255,255,255)
+        stroke = 2
+        cv2.putText(frame, name, (x,y), font, 1, color, stroke, cv2.LINE_AA)
+
+
+
+
+
+
+
 
 
   ##########################temp done#########33  
@@ -206,7 +280,7 @@ if __name__ == '__main__':
 
   #trackerType = "CSRT"      
   trackerType = "CSRT"      
-  itr = 0
+  itr = 6
 
   # Set video to load
   videoPath = "muaaz.mp4"
