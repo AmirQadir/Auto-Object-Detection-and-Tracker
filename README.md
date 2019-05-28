@@ -18,7 +18,7 @@ The above steps run once when the program is executed. Due to limitations of the
 Use YOLO V3 to detect objects
 Filter out the faces from the detected objects using MTCNN
 Save the faces in memory
-Match the newly detected faces with the previously existing ones using INSERT_ALGO_HERE
+Match the newly detected faces with the previously existing ones using HAAR Cascade
 Use CSRT to track the objects
 
 ## How to Run
