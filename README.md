@@ -1,7 +1,7 @@
 # Auto Object Detection and Tracker
 
 ## About
-This repositry is the result of a semster project we did in CS495 (Fundamentals of Computer Vision) at FAST-NUCES Karachi Pakistan. 
+This repository is the result of a semster project we did in CS495 (Fundamentals of Computer Vision) at FAST-NUCES Karachi Pakistan. 
 
 ## Objective:
 The program is designed to detect various objects from a video stream (either webcam or pre recorded video). The detected objects are then tracked as they move to different positions on the screen. Additionally, the program can identify if the same person has left and then reentered the scene using face recognition.
@@ -23,6 +23,13 @@ Use CSRT to track the objects
 
 ## How to Run
 The code was tested on Windows 8 and Windows 10, howver it should work on other versions as well as long as the prerequisites are met. We have mentioned the versions of the libraries/tools we ran this on, again, it may or may not work on other versions.
+
+* Download this Project 
+  git clone https://github.com/AmirQadir/Auto-Object-Detection-and-Tracker
+* Make sure you have pre-requisites installed.
+* python project.py (To run the project).
+
+ 
 
 ### Prerequisites
 * Python 3.7
