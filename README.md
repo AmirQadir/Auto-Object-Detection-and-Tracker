@@ -1,7 +1,7 @@
 # Auto Object Detection and Tracker
 
 ## About
-This repository is the result of a semster project we did in CS495 (Fundamentals of Computer Vision) at FAST-NUCES Karachi Pakistan. 
+This repository is the result of a semester project we did in CS495 (Fundamentals of Computer Vision) at FAST-NUCES Karachi Pakistan. 
 
 ## Objective:
 The program is designed to detect various objects from a video stream (either webcam or pre recorded video). The detected objects are then tracked as they move to different positions on the screen. Additionally, the program can identify if the same person has left and then reentered the scene using face recognition.
